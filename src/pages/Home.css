@@ -1,0 +1,33 @@
+.home {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1200px;
+    margin-top: 5rem;
+    flex-wrap: wrap;
+}
+
+.sidebar {
+    min-width: 250px;
+    flex-grow: 1;
+}
+.sidebar .content-block {
+    background-color: aqua;
+}
+
+.hero {
+    flex-grow: 10;
+    min-width: 300px;
+}
+.hero .content-block {
+    background-color: blue;
+}
+
+@media screen and (min-width: 700px){
+    .sidebar {
+        max-width: 300px;
+    }
+    
+}
