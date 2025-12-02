@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advent of Code - Pejoe.dev</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/GGQ7CNa.png" />
+    <meta property="og:title" content="Advent of Code - Pejoe.dev" />
+    <meta property="og:description" content="Track my Advent of Code progress" />
+    <meta property="og:image" content="https://i.imgur.com/GGQ7CNa.png" />
+    <meta property="og:url" content="https://pejoe.dev/advent-of-code" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f2f2;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin: 0 0 10px;
+            color: #0f7b0f;
+        }
+
+        .header p {
+            font-size: 16px;
+            margin: 0;
+            color: #777;
+        }
+
+        .calendar-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .calendar-header h2 {
+            font-size: 24px;
+            margin: 0 0 10px;
+            color: #0f7b0f;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0f7b0f, #15a515);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .day {
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a,
+        a:hover,
+        a:visited {
+            color: #0f7b0f;
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .day-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .day-link {
+            color: #0f7b0f;
+            text-decoration: none;
+            font-size: 12px;
+            padding: 2px 6px;
+            border: 1px solid #0f7b0f;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .day-link:hover {
+            background: #0f7b0f;
+            color: white;
+        }
+
+        .day-parts {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .part {
+            flex: 1;
+            height: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .day-link.completed,
+        .part.completed {
+            background: #0f7b0f;
+            color: white;
+            border-color: #065b06;
+        }
+
+        .part.incomplete {
+            background: #f5f5f5;
+            color: #999;
+        }
+
+        .day-language {
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+            margin-top: auto;
+            padding: 4px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            min-height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .day.both-completed {
+            background: linear-gradient(135deg, #0f7b0f, #15a515);
+            color: white;
+            border-color: #0f7b0f;
+        }
+
+        .day.both-completed .day-number {
+            color: white;
+        }
+
+        .day.both-completed .day-language {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .day.both-completed::after {
+            content: '⭐';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 20px;
+        }
+
+        .day.future {
+            background: #f5f5f5;
+            color: #bbb;
+            cursor: not-allowed;
+            border-color: #eee;
+        }
+
+        .day.future:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: #eee;
+        }
+
+        .day.future .day-link {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .day.today {
+            border-color: #ff6b35;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #0f7b0f;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        @keyframes spinOnce {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+
+        @media (max-width: 600px) {
+            .calendar-container {
+                margin: 0 10px;
+                padding: 20px;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 10px;
+            }
+
+            .day {
+                min-height: 100px;
+                padding: 8px;
+            }
+
+            .day-number {
+                font-size: 16px;
+            }
+
+            .day-link {
+                font-size: 10px;
+                padding: 1px 4px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="../index.html" class="back-link" style="z-index: 100;">&lt;- Back to Home</a>
+
+    <div class="header">
+        <img src="https://i.imgur.com/GGQ7CNa.png" alt="Pejoe avatar" id="profileImg" />
+        <h1>Advent of Code 2025</h1>
+        <p>The progress of my <a href="https://adventofcode.com/2025" target="_blank">advent of code 2025</a>
+            journey
+        </p>
+    </div>
+
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <h2>December Progress</h2>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0 stars collected (0 puzzles done)</div>
+        </div>
+
+        <div class="calendar-grid" id="calendar">
+            <!-- Days will be generated by JavaScript -->
+        </div>
+
+
+    </div>
+
+
+
+    <script>
+        let progress = {
+            year: 2025,
+            days: {
+                // 1: { part1: true, part2: true, language: "C#" },
+                2: { part1: true, part2: true, language: "C#" }
+            }, // day: { part1: bool, part2: bool, language: string }
+            lastUpdated: new Date().toISOString().split('T')[0]
+        };
+
+        // Load progress from JSON file
+        async function loadProgress() {
+            try {
+                const response = await fetch('./progress.json');
+                if (response.ok) {
+                    progress = await response.json();
+                }
+            } catch (error) {
+                console.log('Could not load progress.json, using default');
+            }
+            updateDisplay();
+        }
+
+
+
+        // Generate calendar days
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const today = new Date();
+            const currentDay = today.getDate();
+            const currentMonth = today.getMonth() + 1; // December = 12
+            const currentYear = today.getFullYear();
+
+            // Check if we're in December 2025
+            const isDecember2025 = currentMonth === 12 && currentYear === 2025;
+
+            calendar.innerHTML = '';
+
+            for (let day = 1; day <= 25; day++) {
+                const dayData = progress.days[day] || { part1: false, part2: false, language: '' };
+
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+
+                // Day header with number and link
+                const header = document.createElement('div');
+                header.className = 'day-header';
+
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+
+                const dayLink = document.createElement('a');
+                dayLink.className = `day-link ${dayData.part2 ? 'completed' : 'incomplete'}`;
+                dayLink.href = `https://adventofcode.com/2025/day/${day}`;
+                dayLink.target = '_blank';
+                dayLink.textContent = 'View Puzzle';
+
+                header.appendChild(dayNumber);
+                header.appendChild(dayLink);
+
+                // Parts display
+                const partsContainer = document.createElement('div');
+                partsContainer.className = 'day-parts';
+
+                const part1 = document.createElement('div');
+                part1.className = `part ${dayData.part1 ? 'completed' : 'incomplete'}`;
+                part1.textContent = 'Part 1';
+
+                const part2 = document.createElement('div');
+                part2.className = `part ${dayData.part2 ? 'completed' : 'incomplete'}`;
+                part2.textContent = 'Part 2';
+
+                partsContainer.appendChild(part1);
+                partsContainer.appendChild(part2);
+
+                // Language display
+                const languageDiv = document.createElement('div');
+                languageDiv.className = 'day-language';
+                languageDiv.textContent = dayData.language || 'No language used';
+
+                dayElement.appendChild(header);
+                dayElement.appendChild(partsContainer);
+                dayElement.appendChild(languageDiv);
+
+                // Add appropriate classes
+                if (dayData.part1 && dayData.part2) {
+                    dayElement.classList.add('both-completed');
+                }
+
+                if (isDecember2025 && day === currentDay) {
+                    dayElement.classList.add('today');
+                } else if (isDecember2025 && day > currentDay) {
+                    dayElement.classList.add('future');
+                }
+
+                calendar.appendChild(dayElement);
+            }
+        }
+
+
+
+        // Update progress display
+        function updateDisplay() {
+            let totalParts = 0;
+            let stars = 0;
+
+            Object.values(progress.days).forEach(day => {
+                if (day.part1) totalParts++;
+                if (day.part2) totalParts++;
+                if (day.part1 && day.part2) stars++;
+            });
+
+            const percentage = Math.round((totalParts / 50) * 100);
+
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            document.getElementById('progressText').textContent =
+                `${stars} stars collected (${totalParts}/50 puzzles completed)`;
+
+            generateCalendar();
+        }
+
+
+
+        // Profile image spin animation (like main page)
+        const pfp = document.getElementById('profileImg');
+        let angle = 0;
+        let velocity = 7.6;
+        let lastTime = null;
+
+        function animate(time) {
+            if (lastTime === null) lastTime = time;
+            const dt = (time - lastTime) / 1000;
+            lastTime = time;
+
+            if (Math.abs(velocity) > 0.001) {
+                angle += velocity * dt;
+                velocity *= 0.98;
+                pfp.style.transform = `rotate(${angle}rad)`;
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        requestAnimationFrame(animate);
+
+        pfp.addEventListener('click', () => {
+            velocity += 25;
+        });
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            loadProgress();
+        });
+
+
+    </script>
+</body>
+
+</html>
