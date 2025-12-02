@@ -346,6 +346,8 @@
 
     </div>
 
+    <div id="faqContainer"></div>
+
 
 
     <script>
@@ -434,7 +436,27 @@
             }
         }
 
+        // Generate FAQ section if needed
+        function generateFAQ() {
+            const faqContainer = document.getElementById('faqContainer');
 
+            if (amountOfDays < 25) {
+                faqContainer.innerHTML = `
+                    <div class="calendar-container" style="margin-top: 20px;">
+                        <div class="calendar-header">
+                            <h2>FAQ</h2>
+                        </div>
+                        <div style="text-align: left;">
+                            <p><strong>Q: Where are the puzzles after ${amountOfDays}? Advent is 25 days.</strong></p>
+                            <p><strong>A:</strong> Advent of code changed to a ${amountOfDays} day format. You can read about that <a
+                                    href="https://adventofcode.com/2025/about#faq_num_days" target="_blank">here</a>.</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                faqContainer.innerHTML = '';
+            }
+        }
 
         // Update progress display
         function updateDisplay() {
@@ -454,6 +476,7 @@
                 `${stars} stars collected (${totalParts}/${amountOfDays * 2} puzzles completed)`;
 
             generateCalendar();
+            generateFAQ();
         }
 
 
