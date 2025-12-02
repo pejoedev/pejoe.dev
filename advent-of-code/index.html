@@ -150,27 +150,37 @@
 
         .part {
             flex: 1;
-            height: 20px;
+            height: 24px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             transition: all 0.2s ease;
+            position: relative;
         }
 
         .day-link.completed,
         .part.completed {
-            background: #0f7b0f;
+            background: linear-gradient(135deg, #0f7b0f, #15a515);
             color: white;
             border-color: #065b06;
+            box-shadow: 0 2px 4px rgba(15, 123, 15, 0.3);
+        }
+
+        .part.completed::before {
+            content: '✓ ';
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 2px;
         }
 
         .part.incomplete {
-            background: #f5f5f5;
-            color: #999;
+            background: #f8f9fa;
+            color: #6c757d;
+            border-color: #e9ecef;
         }
 
         .day-language {
@@ -205,9 +215,10 @@
         .day.both-completed::after {
             content: '⭐';
             position: absolute;
-            top: -5px;
-            right: -5px;
-            font-size: 20px;
+            top: -8px;
+            right: -8px;
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
         }
 
         .day.future {
@@ -338,6 +349,7 @@
 
 
     <script>
+        const amountOfDays = 12;
         let progress = {
             year: 2025,
             days: {
@@ -346,21 +358,6 @@
             }, // day: { part1: bool, part2: bool, language: string }
             lastUpdated: new Date().toISOString().split('T')[0]
         };
-
-        // Load progress from JSON file
-        async function loadProgress() {
-            try {
-                const response = await fetch('./progress.json');
-                if (response.ok) {
-                    progress = await response.json();
-                }
-            } catch (error) {
-                console.log('Could not load progress.json, using default');
-            }
-            updateDisplay();
-        }
-
-
 
         // Generate calendar days
         function generateCalendar() {
@@ -375,7 +372,7 @@
 
             calendar.innerHTML = '';
 
-            for (let day = 1; day <= 25; day++) {
+            for (let day = 1; day <= amountOfDays; day++) {
                 const dayData = progress.days[day] || { part1: false, part2: false, language: '' };
 
                 const dayElement = document.createElement('div');
@@ -404,11 +401,11 @@
 
                 const part1 = document.createElement('div');
                 part1.className = `part ${dayData.part1 ? 'completed' : 'incomplete'}`;
-                part1.textContent = 'Part 1';
+                part1.textContent = dayData.part1 ? 'Part 1' : 'Part 1';
 
                 const part2 = document.createElement('div');
                 part2.className = `part ${dayData.part2 ? 'completed' : 'incomplete'}`;
-                part2.textContent = 'Part 2';
+                part2.textContent = dayData.part2 ? 'Part 2' : 'Part 2';
 
                 partsContainer.appendChild(part1);
                 partsContainer.appendChild(part2);
@@ -454,7 +451,7 @@
 
             document.getElementById('progressFill').style.width = `${percentage}%`;
             document.getElementById('progressText').textContent =
-                `${stars} stars collected (${totalParts}/50 puzzles completed)`;
+                `${stars} stars collected (${totalParts}/${amountOfDays * 2} puzzles completed)`;
 
             generateCalendar();
         }
@@ -489,7 +486,7 @@
 
         // Initialize on page load
         window.addEventListener('load', () => {
-            loadProgress();
+            updateDisplay();
         });
 
 
