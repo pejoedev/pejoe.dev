@@ -1,6 +1,7 @@
 import React from 'react'
 import './Home.css'
 import ContentBlock from '../components/ContentBlock/ContentBlock'
+import Sidebar from '../components/Sidebar/Sidebar'
 
 const Home: React.FC = () => {
     return (
@@ -11,16 +12,7 @@ const Home: React.FC = () => {
                 </ContentBlock>
             </section>
 
-            <section className="sidebar">
-                <ContentBlock>
-                    <h2>Sidebar</h2>
-                    <ul>
-                        <li>option</li>
-                        <li>option</li>
-                        <li>option</li>
-                    </ul>
-                </ContentBlock>
-            </section>
+            <Sidebar></Sidebar>
 
 
         </div>
