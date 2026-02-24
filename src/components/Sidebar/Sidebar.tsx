@@ -9,7 +9,7 @@ const Sidebar: React.FC = () => {
         <ContentBlock>
             <h2>Sidebar</h2>
             <ul>
-                <li><a href="/images/cat.jpg">cat.jpg</a></li>
+                <li><a href="/pejoe.dev/images/cat.jpg">cat.jpg</a></li>
                 <li>still under construction</li>
                 <li>still under construction</li>
                 <li>still under construction</li>

@@ -4,11 +4,11 @@ import Home from './pages/Home/Home'
 import Image from './pages/Image/Image'
 import './App.css'
 
-const catImage = '/IMG_1015.JPG'
+const catImage = '/pejoe.dev/IMG_1015.JPG'
 
 function App() {
     return (
-        <Router>
+        <Router basename="/pejoe.dev/">
             <Layout>
                 <Routes>
                     <Route path="/" element={<Home />} />
