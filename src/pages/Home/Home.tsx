@@ -1,8 +1,8 @@
 import React from 'react'
 import './Home.css'
-import ContentBlock from '../components/ContentBlock/ContentBlock'
-import Sidebar from '../components/Sidebar/Sidebar'
-import SpinningPFP from '../components/SpinningPFP/SpinningPFP'
+import ContentBlock from '../../components/ContentBlock/ContentBlock'
+import Sidebar from '../../components/Sidebar/Sidebar'
+import SpinningPFP from '../../components/SpinningPFP/SpinningPFP'
 
 const Home: React.FC = () => {
     return (
