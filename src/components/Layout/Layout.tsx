@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 import './Layout.css'
 
 interface LayoutProps {
@@ -7,7 +7,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-    const location = useLocation()
+    // const location = useLocation()
 
     return (
         <div className="layout">
