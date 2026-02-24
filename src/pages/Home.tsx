@@ -9,10 +9,18 @@ const Home: React.FC = () => {
             <section className="hero">
                 <ContentBlock>
                     <h1>Welcome to Pejoe.dev</h1>
+                    <p>
+                        Welcome to my small website. This website is inspired by all these neocities sites.
+                        This website is my blog, and my little digital garden.
+                    </p>
                 </ContentBlock>
             </section>
+            <section className="sidebar">
+                <Sidebar></Sidebar>
+                <ContentBlock>
 
-            <Sidebar></Sidebar>
+                </ContentBlock>
+            </section>
 
 
         </div>

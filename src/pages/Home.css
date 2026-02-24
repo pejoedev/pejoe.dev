@@ -13,6 +13,9 @@
     min-width: 250px;
     flex-grow: 1;
 }
+.sidebar .content-block {
+    margin-bottom: 1rem;
+}
 .content-block {
     background-color: black;
 }
@@ -20,6 +23,7 @@
 .hero {
     flex-grow: 10;
     min-width: 300px;
+    max-width: 899px;
 }
 
 @media screen and (min-width: 700px){
