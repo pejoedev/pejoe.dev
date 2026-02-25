@@ -32,3 +32,35 @@
     }
     
 }
+
+.overlay {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    animation: shake 5s ease-in-out infinite;
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+    2.5% {
+        transform: rotate(-5deg);
+    }
+    7.5% {
+        transform: rotate(5deg);
+    }
+    10% {
+        transform: rotate(0deg);
+    }
+    12.5% {
+        transform: rotate(-5deg);
+    }
+    17.5% {
+        transform: rotate(5deg);
+    }
+    20%, 100% {
+        transform: rotate(0deg);
+    }
+}
