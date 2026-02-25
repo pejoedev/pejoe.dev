@@ -49,6 +49,7 @@
     top: 20px;
     right: 20px;
     animation: slideIn 2s ease-out forwards, shake 5s ease-in-out 2s infinite;
+    cursor: pointer;
 }
 
 @keyframes slideIn {
