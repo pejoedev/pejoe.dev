@@ -4,7 +4,7 @@ import Home from './pages/Home/Home'
 import Image from './pages/Image/Image'
 import './App.css'
 
-const catImage = '/IMG_1015.JPG'
+const catImage = '/images/IMG_1015.JPG'
 
 function App() {
     return (

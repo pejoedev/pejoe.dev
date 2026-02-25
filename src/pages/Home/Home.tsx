@@ -20,7 +20,7 @@ const Home: React.FC = () => {
                 <Sidebar></Sidebar>
                 <ContentBlock>
                     <div style={{ margin: '20px auto', width: '140px' }}>
-                        <SpinningPFP src={'1mb_cat.png'} ></SpinningPFP>
+                        <SpinningPFP src={'images/1mb_cat.png'} ></SpinningPFP>
                         <p style={{ textAlign: 'center' }}>Click me!</p>
                     </div>
                 </ContentBlock>
