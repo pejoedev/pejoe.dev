@@ -23,7 +23,7 @@ const SpinningPFP: React.FC<SpinningPFPProps> = ({ src, alt = 'avatar' }) => {
 
             if (Math.abs(state.velocity) > 0.001) {
                 state.angle += state.velocity * dt;
-                state.velocity *= 0.98;
+                state.velocity *= 0.991;
 
                 if (imgRef.current) {
                     imgRef.current.style.transform = `rotate(${state.angle}rad)`;
@@ -40,7 +40,7 @@ const SpinningPFP: React.FC<SpinningPFPProps> = ({ src, alt = 'avatar' }) => {
     }, []);
 
     const handleClick = () => {
-        stateRef.current.velocity += 15 + (Math.random() * 15);
+        stateRef.current.velocity += 15;
     };
 
     return (
