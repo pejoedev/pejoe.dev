@@ -33,12 +33,31 @@
     
 }
 
+.overlay div {
+    position: absolute;
+    z-index: 1000;
+}
 .overlay {
-    position: fixed;
+    position: absolute;
+    top: 0px;
+    width: 100vw;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.envelope {
     top: 20px;
     right: 20px;
-    z-index: 1000;
-    animation: shake 5s ease-in-out infinite;
+    animation: slideIn 2s ease-out forwards, shake 5s ease-in-out 2s infinite;
+}
+
+@keyframes slideIn {
+    from {
+        right: -80px;
+    }
+    to {
+        right: 20px;
+    }
 }
 
 @keyframes shake {
